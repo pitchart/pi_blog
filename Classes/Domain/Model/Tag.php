@@ -1,5 +1,5 @@
 <?php
-namespace Pitchart\PiBlog\Controller;
+namespace Pitchart\PiBlog\Domain\Model;
 
 /***************************************************************
  *
@@ -27,39 +27,38 @@ namespace Pitchart\PiBlog\Controller;
  ***************************************************************/
 
 /**
- * PostController
+ * Tag
  */
-class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class Tag extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
-     * postRepository
+     * Libellé
      *
-     * @var \Pitchart\PiBlog\Domain\Repository\PostRepository
-     * @inject
+     * @var string
+     * @validate NotEmpty
      */
-    protected $postRepository = NULL;
+    protected $name = '';
     
     /**
-     * action list
+     * Returns the name
      *
-     * @return void
+     * @return string $name
      */
-    public function listAction()
+    public function getName()
     {
-        $posts = $this->postRepository->findAll();
-        $this->view->assign('posts', $posts);
+        return $this->name;
     }
     
     /**
-     * action show
+     * Sets the name
      *
-     * @param \Pitchart\PiBlog\Domain\Model\Post $post
+     * @param string $name
      * @return void
      */
-    public function showAction(\Pitchart\PiBlog\Domain\Model\Post $post)
+    public function setName($name)
     {
-        $this->view->assign('post', $post);
+        $this->name = $name;
     }
 
 }

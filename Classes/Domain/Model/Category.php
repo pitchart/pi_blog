@@ -1,5 +1,5 @@
 <?php
-namespace Pitchart\PiBlog\Controller;
+namespace Pitchart\PiBlog\Domain\Model;
 
 /***************************************************************
  *
@@ -27,39 +27,66 @@ namespace Pitchart\PiBlog\Controller;
  ***************************************************************/
 
 /**
- * PostController
+ * Category
  */
-class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
-     * postRepository
+     * Libellé
      *
-     * @var \Pitchart\PiBlog\Domain\Repository\PostRepository
-     * @inject
+     * @var string
+     * @validate NotEmpty
      */
-    protected $postRepository = NULL;
+    protected $name = '';
     
     /**
-     * action list
+     * Description
      *
-     * @return void
+     * @var string
      */
-    public function listAction()
+    protected $description = '';
+    
+    /**
+     * Returns the name
+     *
+     * @return string $name
+     */
+    public function getName()
     {
-        $posts = $this->postRepository->findAll();
-        $this->view->assign('posts', $posts);
+        return $this->name;
     }
     
     /**
-     * action show
+     * Sets the name
      *
-     * @param \Pitchart\PiBlog\Domain\Model\Post $post
+     * @param string $name
      * @return void
      */
-    public function showAction(\Pitchart\PiBlog\Domain\Model\Post $post)
+    public function setName($name)
     {
-        $this->view->assign('post', $post);
+        $this->name = $name;
+    }
+    
+    /**
+     * Returns the description
+     *
+     * @return string $description
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    /**
+     * Sets the description
+     *
+     * @param string $description
+     * @return void
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
 }

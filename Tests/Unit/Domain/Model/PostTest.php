@@ -155,10 +155,10 @@ class PostTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 	/**
 	 * @test
 	 */
-	public function getThumbnailReturnsInitialValueForString()
+	public function getThumbnailReturnsInitialValueForFileReference()
 	{
-		$this->assertSame(
-			'',
+		$this->assertEquals(
+			NULL,
 			$this->subject->getThumbnail()
 		);
 	}
@@ -166,14 +166,239 @@ class PostTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 	/**
 	 * @test
 	 */
-	public function setThumbnailForStringSetsThumbnail()
+	public function setThumbnailForFileReferenceSetsThumbnail()
 	{
-		$this->subject->setThumbnail('Conceived at T3CON10');
+		$fileReferenceFixture = new \TYPO3\CMS\Extbase\Domain\Model\FileReference();
+		$this->subject->setThumbnail($fileReferenceFixture);
 
 		$this->assertAttributeEquals(
-			'Conceived at T3CON10',
+			$fileReferenceFixture,
 			'thumbnail',
 			$this->subject
 		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function getAuthorsReturnsInitialValueForAuthor()
+	{
+		$newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->assertEquals(
+			$newObjectStorage,
+			$this->subject->getAuthors()
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function setAuthorsForObjectStorageContainingAuthorSetsAuthors()
+	{
+		$author = new \Pitchart\PiBlog\Domain\Model\Author();
+		$objectStorageHoldingExactlyOneAuthors = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$objectStorageHoldingExactlyOneAuthors->attach($author);
+		$this->subject->setAuthors($objectStorageHoldingExactlyOneAuthors);
+
+		$this->assertAttributeEquals(
+			$objectStorageHoldingExactlyOneAuthors,
+			'authors',
+			$this->subject
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function addAuthorToObjectStorageHoldingAuthors()
+	{
+		$author = new \Pitchart\PiBlog\Domain\Model\Author();
+		$authorsObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
+		$authorsObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($author));
+		$this->inject($this->subject, 'authors', $authorsObjectStorageMock);
+
+		$this->subject->addAuthor($author);
+	}
+
+	/**
+	 * @test
+	 */
+	public function removeAuthorFromObjectStorageHoldingAuthors()
+	{
+		$author = new \Pitchart\PiBlog\Domain\Model\Author();
+		$authorsObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
+		$authorsObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($author));
+		$this->inject($this->subject, 'authors', $authorsObjectStorageMock);
+
+		$this->subject->removeAuthor($author);
+
+	}
+
+	/**
+	 * @test
+	 */
+	public function getCategoriesReturnsInitialValueForCategory()
+	{
+		$newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->assertEquals(
+			$newObjectStorage,
+			$this->subject->getCategories()
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function setCategoriesForObjectStorageContainingCategorySetsCategories()
+	{
+		$category = new \Pitchart\PiBlog\Domain\Model\Category();
+		$objectStorageHoldingExactlyOneCategories = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$objectStorageHoldingExactlyOneCategories->attach($category);
+		$this->subject->setCategories($objectStorageHoldingExactlyOneCategories);
+
+		$this->assertAttributeEquals(
+			$objectStorageHoldingExactlyOneCategories,
+			'categories',
+			$this->subject
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function addCategoryToObjectStorageHoldingCategories()
+	{
+		$category = new \Pitchart\PiBlog\Domain\Model\Category();
+		$categoriesObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
+		$categoriesObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($category));
+		$this->inject($this->subject, 'categories', $categoriesObjectStorageMock);
+
+		$this->subject->addCategory($category);
+	}
+
+	/**
+	 * @test
+	 */
+	public function removeCategoryFromObjectStorageHoldingCategories()
+	{
+		$category = new \Pitchart\PiBlog\Domain\Model\Category();
+		$categoriesObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
+		$categoriesObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($category));
+		$this->inject($this->subject, 'categories', $categoriesObjectStorageMock);
+
+		$this->subject->removeCategory($category);
+
+	}
+
+	/**
+	 * @test
+	 */
+	public function getTagsReturnsInitialValueForTag()
+	{
+		$newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->assertEquals(
+			$newObjectStorage,
+			$this->subject->getTags()
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function setTagsForObjectStorageContainingTagSetsTags()
+	{
+		$tag = new \Pitchart\PiBlog\Domain\Model\Tag();
+		$objectStorageHoldingExactlyOneTags = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$objectStorageHoldingExactlyOneTags->attach($tag);
+		$this->subject->setTags($objectStorageHoldingExactlyOneTags);
+
+		$this->assertAttributeEquals(
+			$objectStorageHoldingExactlyOneTags,
+			'tags',
+			$this->subject
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function addTagToObjectStorageHoldingTags()
+	{
+		$tag = new \Pitchart\PiBlog\Domain\Model\Tag();
+		$tagsObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
+		$tagsObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($tag));
+		$this->inject($this->subject, 'tags', $tagsObjectStorageMock);
+
+		$this->subject->addTag($tag);
+	}
+
+	/**
+	 * @test
+	 */
+	public function removeTagFromObjectStorageHoldingTags()
+	{
+		$tag = new \Pitchart\PiBlog\Domain\Model\Tag();
+		$tagsObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
+		$tagsObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($tag));
+		$this->inject($this->subject, 'tags', $tagsObjectStorageMock);
+
+		$this->subject->removeTag($tag);
+
+	}
+
+	/**
+	 * @test
+	 */
+	public function getCommentsReturnsInitialValueForComment()
+	{
+		$newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->assertEquals(
+			$newObjectStorage,
+			$this->subject->getComments()
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function setCommentsForObjectStorageContainingCommentSetsComments()
+	{
+		$comment = new \Pitchart\PiBlog\Domain\Model\Comment();
+		$objectStorageHoldingExactlyOneComments = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$objectStorageHoldingExactlyOneComments->attach($comment);
+		$this->subject->setComments($objectStorageHoldingExactlyOneComments);
+
+		$this->assertAttributeEquals(
+			$objectStorageHoldingExactlyOneComments,
+			'comments',
+			$this->subject
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function addCommentToObjectStorageHoldingComments()
+	{
+		$comment = new \Pitchart\PiBlog\Domain\Model\Comment();
+		$commentsObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', FALSE);
+		$commentsObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($comment));
+		$this->inject($this->subject, 'comments', $commentsObjectStorageMock);
+
+		$this->subject->addComment($comment);
+	}
+
+	/**
+	 * @test
+	 */
+	public function removeCommentFromObjectStorageHoldingComments()
+	{
+		$comment = new \Pitchart\PiBlog\Domain\Model\Comment();
+		$commentsObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', FALSE);
+		$commentsObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($comment));
+		$this->inject($this->subject, 'comments', $commentsObjectStorageMock);
+
+		$this->subject->removeComment($comment);
+
 	}
 }

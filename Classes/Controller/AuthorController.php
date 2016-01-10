@@ -27,18 +27,18 @@ namespace Pitchart\PiBlog\Controller;
  ***************************************************************/
 
 /**
- * PostController
+ * AuthorController
  */
-class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class AuthorController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
-     * postRepository
+     * authorRepository
      *
-     * @var \Pitchart\PiBlog\Domain\Repository\PostRepository
+     * @var \Pitchart\PiBlog\Domain\Repository\AuthorRepository
      * @inject
      */
-    protected $postRepository = NULL;
+    protected $authorRepository = NULL;
     
     /**
      * action list
@@ -47,19 +47,19 @@ class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
-        $posts = $this->postRepository->findAll();
-        $this->view->assign('posts', $posts);
+        $authors = $this->authorRepository->findAll();
+        $this->view->assign('authors', $authors);
     }
     
     /**
      * action show
      *
-     * @param \Pitchart\PiBlog\Domain\Model\Post $post
+     * @param \Pitchart\PiBlog\Domain\Model\Author $author
      * @return void
      */
-    public function showAction(\Pitchart\PiBlog\Domain\Model\Post $post)
+    public function showAction(\Pitchart\PiBlog\Domain\Model\Author $author)
     {
-        $this->view->assign('post', $post);
+        $this->view->assign('author', $author);
     }
 
 }

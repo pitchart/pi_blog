@@ -1,5 +1,5 @@
 <?php
-namespace Pitchart\PiBlog\Controller;
+namespace Pitchart\PiBlog\Domain\Repository;
 
 /***************************************************************
  *
@@ -27,39 +27,16 @@ namespace Pitchart\PiBlog\Controller;
  ***************************************************************/
 
 /**
- * PostController
+ * The repository for Authors
  */
-class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class AuthorRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
     /**
-     * postRepository
-     *
-     * @var \Pitchart\PiBlog\Domain\Repository\PostRepository
-     * @inject
+     * @var array
      */
-    protected $postRepository = NULL;
-    
-    /**
-     * action list
-     *
-     * @return void
-     */
-    public function listAction()
-    {
-        $posts = $this->postRepository->findAll();
-        $this->view->assign('posts', $posts);
-    }
-    
-    /**
-     * action show
-     *
-     * @param \Pitchart\PiBlog\Domain\Model\Post $post
-     * @return void
-     */
-    public function showAction(\Pitchart\PiBlog\Domain\Model\Post $post)
-    {
-        $this->view->assign('post', $post);
-    }
+    protected $defaultOrderings = array(
+        'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+    );
 
 }

@@ -27,19 +27,11 @@ namespace Pitchart\PiBlog\Controller;
  ***************************************************************/
 
 /**
- * PostController
+ * TagController
  */
-class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class TagController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
-    /**
-     * postRepository
-     *
-     * @var \Pitchart\PiBlog\Domain\Repository\PostRepository
-     * @inject
-     */
-    protected $postRepository = NULL;
-    
     /**
      * action list
      *
@@ -47,19 +39,19 @@ class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
-        $posts = $this->postRepository->findAll();
-        $this->view->assign('posts', $posts);
+        $tags = $this->tagRepository->findAll();
+        $this->view->assign('tags', $tags);
     }
     
     /**
      * action show
      *
-     * @param \Pitchart\PiBlog\Domain\Model\Post $post
+     * @param \Pitchart\PiBlog\Domain\Model\Tag $tag
      * @return void
      */
-    public function showAction(\Pitchart\PiBlog\Domain\Model\Post $post)
+    public function showAction(\Pitchart\PiBlog\Domain\Model\Tag $tag)
     {
-        $this->view->assign('post', $post);
+        $this->view->assign('tag', $tag);
     }
 
 }

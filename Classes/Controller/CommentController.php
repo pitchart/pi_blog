@@ -27,39 +27,32 @@ namespace Pitchart\PiBlog\Controller;
  ***************************************************************/
 
 /**
- * PostController
+ * CommentController
  */
-class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
-     * postRepository
-     *
-     * @var \Pitchart\PiBlog\Domain\Repository\PostRepository
-     * @inject
-     */
-    protected $postRepository = NULL;
-    
-    /**
-     * action list
+     * action new
      *
      * @return void
      */
-    public function listAction()
+    public function newAction()
     {
-        $posts = $this->postRepository->findAll();
-        $this->view->assign('posts', $posts);
+        
     }
     
     /**
-     * action show
+     * action create
      *
-     * @param \Pitchart\PiBlog\Domain\Model\Post $post
+     * @param \Pitchart\PiBlog\Domain\Model\Comment $newComment
      * @return void
      */
-    public function showAction(\Pitchart\PiBlog\Domain\Model\Post $post)
+    public function createAction(\Pitchart\PiBlog\Domain\Model\Comment $newComment)
     {
-        $this->view->assign('post', $post);
+        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See http://wiki.typo3.org/T3Doc/Extension_Builder/Using_the_Extension_Builder#1._Model_the_domain', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+        $this->commentRepository->add($newComment);
+        $this->redirect('list');
     }
 
 }

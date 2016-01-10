@@ -1,12 +1,13 @@
 <?php
 return array(
 	'ctrl' => array(
-		'title'	=> 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post',
-		'label' => 'title',
+		'title'	=> 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_author',
+		'label' => 'first_name',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 
@@ -19,14 +20,14 @@ return array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'title,publication_date,summary,content,thumbnail,authors,categories,tags,comments,',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('pi_blog') . 'Resources/Public/Icons/tx_piblog_domain_model_post.gif'
+		'searchFields' => 'first_name,last_name,user_name,description,image,tags,',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('pi_blog') . 'Resources/Public/Icons/tx_piblog_domain_model_author.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, publication_date, summary, content, thumbnail, authors, categories, tags, comments',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, first_name, last_name, user_name, description, image, tags',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, publication_date, summary;;;richtext:rte_transform[mode=ts_links], content;;;richtext:rte_transform[mode=ts_links], thumbnail, authors, categories, tags, comments, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, first_name, last_name, user_name, description;;;richtext:rte_transform[mode=ts_links], image, tags, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -57,8 +58,8 @@ return array(
 				'items' => array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_piblog_domain_model_post',
-				'foreign_table_where' => 'AND tx_piblog_domain_model_post.pid=###CURRENT_PID### AND tx_piblog_domain_model_post.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_piblog_domain_model_author',
+				'foreign_table_where' => 'AND tx_piblog_domain_model_author.pid=###CURRENT_PID### AND tx_piblog_domain_model_author.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource' => array(
@@ -116,29 +117,36 @@ return array(
 			),
 		),
 
-		'title' => array(
+		'first_name' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.title',
+			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_author.first_name',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim,required'
 			),
 		),
-		'publication_date' => array(
+		'last_name' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.publication_date',
+			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_author.last_name',
 			'config' => array(
 				'type' => 'input',
-				'size' => 7,
-				'eval' => 'date,required',
-				'checkbox' => 1,
-				'default' => time()
+				'size' => 30,
+				'eval' => 'trim,required'
 			),
 		),
-		'summary' => array(
+		'user_name' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.summary',
+			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_author.user_name',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+		'description' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_author.description',
 			'config' => array(
 				'type' => 'text',
 				'cols' => 40,
@@ -162,37 +170,11 @@ return array(
 				)
 			),
 		),
-		'content' => array(
+		'image' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.content',
-			'config' => array(
-				'type' => 'text',
-				'cols' => 40,
-				'rows' => 15,
-				'eval' => 'trim',
-				'wizards' => array(
-					'RTE' => array(
-						'icon' => 'wizard_rte2.gif',
-						'notNewRecords'=> 1,
-						'RTEonly' => 1,
-						'module' => array(
-							'name' => 'wizard_rich_text_editor',
-							'urlParameters' => array(
-								'mode' => 'wizard',
-								'act' => 'wizard_rte.php'
-							)
-						),
-						'title' => 'LLL:EXT:cms/locallang_ttc.xlf:bodytext.W.RTE',
-						'type' => 'script'
-					)
-				)
-			),
-		),
-		'thumbnail' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.thumbnail',
+			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_author.image',
 			'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-				'thumbnail',
+				'image',
 				array(
 					'appearance' => array(
 						'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
@@ -234,96 +216,14 @@ return array(
 				$GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
 			),
 		),
-		'authors' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.authors',
-			'config' => array(
-				'type' => 'select',
-				'renderType' => 'selectMultipleSideBySide',
-				'foreign_table' => 'tx_piblog_domain_model_author',
-				'MM' => 'tx_piblog_post_author_mm',
-				'size' => 10,
-				'autoSizeMax' => 30,
-				'maxitems' => 9999,
-				'multiple' => 0,
-				'wizards' => array(
-					'_PADDING' => 1,
-					'_VERTICAL' => 1,
-					'edit' => array(
-						'module' => array(
-							'name' => 'wizard_edit',
-						),
-						'type' => 'popup',
-						'title' => 'Edit',
-						'icon' => 'edit2.gif',
-						'popup_onlyOpenIfSelected' => 1,
-						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-						),
-					'add' => Array(
-						'module' => array(
-							'name' => 'wizard_add',
-						),
-						'type' => 'script',
-						'title' => 'Create new',
-						'icon' => 'add.gif',
-						'params' => array(
-							'table' => 'tx_piblog_domain_model_author',
-							'pid' => '###CURRENT_PID###',
-							'setValue' => 'prepend'
-						),
-					),
-				),
-			),
-		),
-		'categories' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.categories',
-			'config' => array(
-				'type' => 'select',
-				'renderType' => 'selectMultipleSideBySide',
-				'foreign_table' => 'tx_piblog_domain_model_category',
-				'MM' => 'tx_piblog_post_category_mm',
-				'size' => 10,
-				'autoSizeMax' => 30,
-				'maxitems' => 9999,
-				'multiple' => 0,
-				'wizards' => array(
-					'_PADDING' => 1,
-					'_VERTICAL' => 1,
-					'edit' => array(
-						'module' => array(
-							'name' => 'wizard_edit',
-						),
-						'type' => 'popup',
-						'title' => 'Edit',
-						'icon' => 'edit2.gif',
-						'popup_onlyOpenIfSelected' => 1,
-						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-						),
-					'add' => Array(
-						'module' => array(
-							'name' => 'wizard_add',
-						),
-						'type' => 'script',
-						'title' => 'Create new',
-						'icon' => 'add.gif',
-						'params' => array(
-							'table' => 'tx_piblog_domain_model_category',
-							'pid' => '###CURRENT_PID###',
-							'setValue' => 'prepend'
-						),
-					),
-				),
-			),
-		),
 		'tags' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.tags',
+			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_author.tags',
 			'config' => array(
 				'type' => 'select',
 				'renderType' => 'selectMultipleSideBySide',
 				'foreign_table' => 'tx_piblog_domain_model_tag',
-				'MM' => 'tx_piblog_post_tag_mm',
+				'MM' => 'tx_piblog_author_tag_mm',
 				'size' => 10,
 				'autoSizeMax' => 30,
 				'maxitems' => 9999,
@@ -356,24 +256,6 @@ return array(
 					),
 				),
 			),
-		),
-		'comments' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:pi_blog/Resources/Private/Language/locallang_db.xlf:tx_piblog_domain_model_post.comments',
-			'config' => array(
-				'type' => 'inline',
-				'foreign_table' => 'tx_piblog_domain_model_comment',
-				'foreign_field' => 'post',
-				'maxitems' => 9999,
-				'appearance' => array(
-					'collapseAll' => 0,
-					'levelLinksPosition' => 'top',
-					'showSynchronizationLink' => 1,
-					'showPossibleLocalizationRecords' => 1,
-					'showAllLocalizationLink' => 1
-				),
-			),
-
 		),
 		
 	),

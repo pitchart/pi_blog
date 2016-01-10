@@ -25,21 +25,21 @@ namespace Pitchart\PiBlog\Tests\Unit\Controller;
  ***************************************************************/
 
 /**
- * Test case for class Pitchart\PiBlog\Controller\PostController.
+ * Test case for class Pitchart\PiBlog\Controller\TagController.
  *
  * @author Julien VITTE <vitte.julien@gmail.com>
  */
-class PostControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class TagControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
 
 	/**
-	 * @var \Pitchart\PiBlog\Controller\PostController
+	 * @var \Pitchart\PiBlog\Controller\TagController
 	 */
 	protected $subject = NULL;
 
 	public function setUp()
 	{
-		$this->subject = $this->getMock('Pitchart\\PiBlog\\Controller\\PostController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
+		$this->subject = $this->getMock('Pitchart\\PiBlog\\Controller\\TagController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
 	}
 
 	public function tearDown()
@@ -50,17 +50,17 @@ class PostControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 	/**
 	 * @test
 	 */
-	public function listActionFetchesAllPostsFromRepositoryAndAssignsThemToView()
+	public function listActionFetchesAllTagsFromRepositoryAndAssignsThemToView()
 	{
 
-		$allPosts = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
+		$allTags = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
 
-		$postRepository = $this->getMock('Pitchart\\PiBlog\\Domain\\Repository\\PostRepository', array('findAll'), array(), '', FALSE);
-		$postRepository->expects($this->once())->method('findAll')->will($this->returnValue($allPosts));
-		$this->inject($this->subject, 'postRepository', $postRepository);
+		$tagRepository = $this->getMock('', array('findAll'), array(), '', FALSE);
+		$tagRepository->expects($this->once())->method('findAll')->will($this->returnValue($allTags));
+		$this->inject($this->subject, 'tagRepository', $tagRepository);
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$view->expects($this->once())->method('assign')->with('posts', $allPosts);
+		$view->expects($this->once())->method('assign')->with('tags', $allTags);
 		$this->inject($this->subject, 'view', $view);
 
 		$this->subject->listAction();
@@ -69,14 +69,14 @@ class PostControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 	/**
 	 * @test
 	 */
-	public function showActionAssignsTheGivenPostToView()
+	public function showActionAssignsTheGivenTagToView()
 	{
-		$post = new \Pitchart\PiBlog\Domain\Model\Post();
+		$tag = new \Pitchart\PiBlog\Domain\Model\Tag();
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
 		$this->inject($this->subject, 'view', $view);
-		$view->expects($this->once())->method('assign')->with('post', $post);
+		$view->expects($this->once())->method('assign')->with('tag', $tag);
 
-		$this->subject->showAction($post);
+		$this->subject->showAction($tag);
 	}
 }

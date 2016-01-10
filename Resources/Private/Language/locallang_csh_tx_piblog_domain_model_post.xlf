@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-10T14:46:37Z" product-name="pi_blog">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-10T15:01:27Z" product-name="pi_blog">
 		<header/>
 		<body>
 			<trans-unit id="title.description">
@@ -17,6 +17,18 @@
 			</trans-unit>
 			<trans-unit id="thumbnail.description">
 				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="authors.description">
+				<source>Auteurs</source>
+			</trans-unit>
+			<trans-unit id="categories.description">
+				<source>Catégories</source>
+			</trans-unit>
+			<trans-unit id="tags.description">
+				<source>Tags</source>
+			</trans-unit>
+			<trans-unit id="comments.description">
+				<source>Commentaires</source>
 			</trans-unit>
 		</body>
 	</file>

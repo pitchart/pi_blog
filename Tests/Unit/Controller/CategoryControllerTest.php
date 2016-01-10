@@ -25,21 +25,21 @@ namespace Pitchart\PiBlog\Tests\Unit\Controller;
  ***************************************************************/
 
 /**
- * Test case for class Pitchart\PiBlog\Controller\PostController.
+ * Test case for class Pitchart\PiBlog\Controller\CategoryController.
  *
  * @author Julien VITTE <vitte.julien@gmail.com>
  */
-class PostControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class CategoryControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
 
 	/**
-	 * @var \Pitchart\PiBlog\Controller\PostController
+	 * @var \Pitchart\PiBlog\Controller\CategoryController
 	 */
 	protected $subject = NULL;
 
 	public function setUp()
 	{
-		$this->subject = $this->getMock('Pitchart\\PiBlog\\Controller\\PostController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
+		$this->subject = $this->getMock('Pitchart\\PiBlog\\Controller\\CategoryController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
 	}
 
 	public function tearDown()
@@ -50,17 +50,17 @@ class PostControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 	/**
 	 * @test
 	 */
-	public function listActionFetchesAllPostsFromRepositoryAndAssignsThemToView()
+	public function listActionFetchesAllCategoriesFromRepositoryAndAssignsThemToView()
 	{
 
-		$allPosts = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
+		$allCategories = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
 
-		$postRepository = $this->getMock('Pitchart\\PiBlog\\Domain\\Repository\\PostRepository', array('findAll'), array(), '', FALSE);
-		$postRepository->expects($this->once())->method('findAll')->will($this->returnValue($allPosts));
-		$this->inject($this->subject, 'postRepository', $postRepository);
+		$categoryRepository = $this->getMock('', array('findAll'), array(), '', FALSE);
+		$categoryRepository->expects($this->once())->method('findAll')->will($this->returnValue($allCategories));
+		$this->inject($this->subject, 'categoryRepository', $categoryRepository);
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$view->expects($this->once())->method('assign')->with('posts', $allPosts);
+		$view->expects($this->once())->method('assign')->with('categories', $allCategories);
 		$this->inject($this->subject, 'view', $view);
 
 		$this->subject->listAction();
@@ -69,14 +69,14 @@ class PostControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 	/**
 	 * @test
 	 */
-	public function showActionAssignsTheGivenPostToView()
+	public function showActionAssignsTheGivenCategoryToView()
 	{
-		$post = new \Pitchart\PiBlog\Domain\Model\Post();
+		$category = new \Pitchart\PiBlog\Domain\Model\Category();
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
 		$this->inject($this->subject, 'view', $view);
-		$view->expects($this->once())->method('assign')->with('post', $post);
+		$view->expects($this->once())->method('assign')->with('category', $category);
 
-		$this->subject->showAction($post);
+		$this->subject->showAction($category);
 	}
 }
