@@ -13,33 +13,30 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
 <f:section name="main">
-<h1>Listing for Post</h1>
 
 <f:flashMessages />
 
-<table  class="tx_piblog" >
-	<tr>
-		<th><f:translate key="tx_piblog_domain_model_post.title" /></th>
-		<th><f:translate key="tx_piblog_domain_model_post.publication_date" /></th>
-		<th><f:translate key="tx_piblog_domain_model_post.summary" /></th>
-		<th><f:translate key="tx_piblog_domain_model_post.content" /></th>
-		<th><f:translate key="tx_piblog_domain_model_post.thumbnail" /></th>
-		<th> </th>
-		<th> </th>
-	</tr>
+<f:for each="{posts}" as="post">
+	<h1><f:link.action action="show" arguments="{post : post}"> {post.title}</f:link.action></h1>
+	<div class="row">
+		<div class="col-md-3">
+			<f:image src="{post.thumbnail.uid}" treatIdAsReference="1" maxWidth="170" />
+		</div>
+		<div class="col-md-9">
+			<div>Le {post.publicationDate -> f:format.date(format: '%d %B %Y')}</div>
+			<div>{post.summary -> f:format.html()}</div>
+			<f:if condition="{post.authors -> f:count()}">
+				<div>
+					Par <f:for each="{post.authors}" as="author"> {author.firstname} {author.lastName}</f:for>
+				</div>
+			</f:if>
+			<f:if condition="{post.tags -> f:count()}">
+				<f:for each="{post.tags}" as="tag">
+					<span class="label label-default">{tag.name}</span>
+				</f:for>
+			</f:if>
+		</div>
+	</div>
+</f:for>
 
-	<f:for each="{posts}" as="post">
-		<tr>
-			<td><f:link.action action="show" arguments="{post : post}"> {post.title}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{post : post}"> {post.publicationDate -> f:format.date()}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{post : post}"> {post.summary}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{post : post}"> {post.content}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{post : post}"> {post.thumbnail.originalResource.name}</f:link.action></td>
-			<td><f:link.action action="edit" arguments="{post : post}">Edit</f:link.action></td>
-			<td><f:link.action action="delete" arguments="{post : post}">Delete</f:link.action></td>
-		</tr>
-	</f:for>
-</table>
-
-<f:link.action action="new">New Post</f:link.action>
 </f:section>
