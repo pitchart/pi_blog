@@ -15,7 +15,9 @@
                     "_default2_new_create": false,
                     "_default3_edit_update": false,
                     "_default4_delete": false,
-                    "customActions": []
+                    "customActions": [
+                        "last"
+                    ]
                 },
                 "name": "Post",
                 "objectsettings": {
@@ -436,12 +438,12 @@
             "sourceLanguage": "en",
             "state": "stable",
             "targetVersion": "7.6.0-7.6.99",
-            "version": ""
+            "version": "1.0.0"
         },
         "extensionKey": "pi_blog",
         "name": "Pitchart Blog",
-        "originalExtensionKey": "",
-        "originalVendorName": "",
+        "originalExtensionKey": "pi_blog",
+        "originalVendorName": "Pitchart",
         "persons": [
             {
                 "company": "Dawin",
@@ -450,7 +452,26 @@
                 "role": "Developer"
             }
         ],
-        "plugins": [],
+        "plugins": [
+            {
+                "actions": {
+                    "controllerActionCombinations": "Post => list,show,last\nAuthor => list,show\nCategory => list,show\nTag => list,show",
+                    "noncacheableActions": "",
+                    "switchableActions": "Posts\nPost->list; Post->show;\nAuthors\nAuthor->list; Author->show;\nCategories\nCategory->list; Category->show;\nTags\nTag->list; Tag->show;\nLast post\nPost->last;\n"
+                },
+                "key": "pi1",
+                "name": "Blog"
+            },
+            {
+                "actions": {
+                    "controllerActionCombinations": "Comment => create",
+                    "noncacheableActions": "Comment => create",
+                    "switchableActions": "New comment\nComment->create;"
+                },
+                "key": "pi2",
+                "name": "Comments"
+            }
+        ],
         "vendorName": "Pitchart"
     },
     "wires": [
@@ -516,7 +537,7 @@
         }
     ],
     "log": {
-        "last_modified": "2016-01-10 03:01",
+        "last_modified": "2016-01-10 08:40",
         "extension_builder_version": "7.6.0",
         "be_user": " (1)"
     }

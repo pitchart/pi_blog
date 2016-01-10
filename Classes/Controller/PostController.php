@@ -61,5 +61,15 @@ class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $this->view->assign('post', $post);
     }
+    
+    /**
+     * action last
+     *
+     * @return void
+     */
+    public function lastAction()
+    {
+        
+    }
 
 }
