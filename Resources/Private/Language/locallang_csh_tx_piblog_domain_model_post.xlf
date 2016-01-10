@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-10T14:46:37Z" product-name="pi_blog">
+		<header/>
+		<body>
+			<trans-unit id="title.description">
+				<source>Titre</source>
+			</trans-unit>
+			<trans-unit id="publication_date.description">
+				<source>Date de publication</source>
+			</trans-unit>
+			<trans-unit id="summary.description">
+				<source>Résumé</source>
+			</trans-unit>
+			<trans-unit id="content.description">
+				<source>Contenu</source>
+			</trans-unit>
+			<trans-unit id="thumbnail.description">
+				<source>Image</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
