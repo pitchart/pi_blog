@@ -19,10 +19,12 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <f:for each="{posts}" as="post">
 	<h1><f:link.action action="show" arguments="{post : post}"> {post.title}</f:link.action></h1>
 	<div class="row">
-		<div class="col-md-3">
-			<f:image src="{post.thumbnail.uid}" treatIdAsReference="1" maxWidth="170" />
-		</div>
-		<div class="col-md-9">
+		<f:if condition="{post.thumbnail}">
+			<div class="col-md-3">
+				<f:image src="{post.thumbnail.uid}" treatIdAsReference="1" maxWidth="170" />
+			</div>
+		</f:if>
+		<div {f:if(condition: post.thumbnail, then:'class="col-md-9"', else:'class="col-md-12"')}>
 			<div>Le {post.publicationDate -> f:format.date(format: '%d %B %Y')}</div>
 			<div>{post.summary -> f:format.html()}</div>
 			<f:if condition="{post.authors -> f:count()}">
