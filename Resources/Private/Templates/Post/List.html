@@ -1,8 +1,10 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-	<f:for each="{posts}" as="post">
-		<h1><f:link.action action="show" arguments="{post : post}"> {post.title}</f:link.action></h1>
-		<f:render partial="Post/ListItem" arguments="{post: post}" />
-	</f:for>
+	<f:widget.paginate objects="{posts}" as="paginatedPosts" configuration="{itemsPerPage: 1, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 10}">
+		<f:for each="{paginatedPosts}" as="post">
+			<h1><f:link.action action="show" arguments="{post : post}"> {post.title}</f:link.action></h1>
+			<f:render partial="Post/ListItem" arguments="{post: post}" />
+		</f:for>
+	</f:widget.paginate>
 </f:section>
