@@ -1,0 +1,7 @@
+config.tx_extbase.view.widget.TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper.templateRootPath = EXT:pi_blog/Resources/Private/Templates/
+
+plugin.tx_piblog {
+	view.widget {
+		TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper.templateRootPath = typo3conf/ext/pi_blog/Resources/Private/Templates/
+	}
+}
