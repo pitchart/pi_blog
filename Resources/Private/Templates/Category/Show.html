@@ -1,22 +1,20 @@
-
 <f:layout name="Default" />
 
-This Template is responsible for displaying a single view for a domain object
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Templates:
-        Show.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
-
 <f:section name="main">
-<h1>Single View for Category</h1>
+<div class="list-group">
+	<h1 class="list-group-item-heading">{category.name}</h1>
+	<div class="list-group-item-text">{category.description -> f:format.html()}</div>
+</div>
 
-<f:flashMessages />
-<f:render partial="Category/Properties" arguments="{category:category}" />
-<f:link.action action="list">Back to list</f:link.action><br />
-<f:link.action action="new">New Category</f:link.action>
+<f:if condition="{posts -> f:count()}">
+	<hr>
+	<h2 class="text-primary">Les posts de la catégorie "{category.name}"</h2>
+	<f:for each="{posts}" as="post">
+		<h3>{post.title}</h3>
+		<f:render partial="Post/ListItem" arguments="{post: post}" />
+	</f:for>
+</f:if>
+
+<f:link.action action="list">Liste des catégories</f:link.action><br />
+
 </f:section>

@@ -1,22 +1,16 @@
-
 <f:layout name="Default" />
 
-This Template is responsible for displaying a single view for a domain object
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Templates:
-        Show.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
-
 <f:section name="main">
-<h1>Single View for Tag</h1>
+<h1>Posts taggués "{tag.name}"</h1>
 
-<f:flashMessages />
-<f:render partial="Tag/Properties" arguments="{tag:tag}" />
-<f:link.action action="list">Back to list</f:link.action><br />
-<f:link.action action="new">New Tag</f:link.action>
+<f:if condition="{posts -> f:count()}">
+	<f:for each="{posts}" as="post">
+		<div>
+			<h2>{post.title}</h2>
+			<f:render partial="Post/ListItem" arguments="{post: post}" />
+		</div>
+	</f:for>
+</f:if>
+
+<f:link.action action="list">Retour à la liste</f:link.action>
 </f:section>
