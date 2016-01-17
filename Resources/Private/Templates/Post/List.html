@@ -1,44 +1,8 @@
-
 <f:layout name="Default" />
 
-This Template is responsible for creating a table of domain objects.
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Templates:
-        List.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
-
 <f:section name="main">
-
-<f:flashMessages />
-
-<f:for each="{posts}" as="post">
-	<h1><f:link.action action="show" arguments="{post : post}"> {post.title}</f:link.action></h1>
-	<div class="row">
-		<f:if condition="{post.thumbnail}">
-			<div class="col-md-3">
-				<f:image src="{post.thumbnail.uid}" treatIdAsReference="1" maxWidth="170" />
-			</div>
-		</f:if>
-		<div {f:if(condition: post.thumbnail, then:'class="col-md-9"', else:'class="col-md-12"')}>
-			<div>Le {post.publicationDate -> f:format.date(format: '%d %B %Y')}</div>
-			<div>{post.summary -> f:format.html()}</div>
-			<f:if condition="{post.authors -> f:count()}">
-				<div>
-					Par <f:for each="{post.authors}" as="author"> {author.firstname} {author.lastName}</f:for>
-				</div>
-			</f:if>
-			<f:if condition="{post.tags -> f:count()}">
-				<f:for each="{post.tags}" as="tag">
-					<span class="label label-default">{tag.name}</span>
-				</f:for>
-			</f:if>
-		</div>
-	</div>
-</f:for>
-
+	<f:for each="{posts}" as="post">
+		<h1><f:link.action action="show" arguments="{post : post}"> {post.title}</f:link.action></h1>
+		<f:render partial="Post/ListItem" arguments="{post: post}" />
+	</f:for>
 </f:section>
