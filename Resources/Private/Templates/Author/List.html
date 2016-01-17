@@ -15,15 +15,13 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <f:section name="main">
 <h1>Les auteurs</h1>
 
-<f:flashMessages />
-
 <f:for each="{authors}" as="author">
 <div class="row">
 	<div class="col-md-4">
 		<f:image src="{author.image.uid}" treatIdAsReference="1" maxWidth="170" />
 	</div>
 	<div class="col-md-8">
-		<f:link.action action="show" arguments="{author : author}">{author.firstName} {author.lastName}</f:link.action> ({author.userName}) <br>
+		<h2><f:link.action action="show" arguments="{author : author}">{author.firstName} {author.lastName}</f:link.action> ({author.userName})</h2>
 		{author.description -> f:format.html()}
 	</div>
 </div>
