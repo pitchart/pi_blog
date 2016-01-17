@@ -1,0 +1,7 @@
+<h2>{post.title}</h2>
+<p>{post.summary -> f:format.stripTags() -> f:format.crop(maxCharacters: 150, append: ' ...', respectWordBoundaries: 1)}</p>
+<f:if condition="{post.tags -> f:count()}">
+	<f:for each="{post.tags}" as="tag">
+		<span class="label label-default">{tag.name}</span>
+	</f:for>
+</f:if>

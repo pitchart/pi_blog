@@ -69,7 +69,10 @@ class PostController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function lastAction()
     {
-        
+        $lastPost = $this->postRepository->findLast();
+        $this->view->assignMultiple(array(
+            'post' => $lastPost,
+        ));
     }
 
 }

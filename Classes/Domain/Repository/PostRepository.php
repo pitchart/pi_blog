@@ -31,6 +31,35 @@ namespace Pitchart\PiBlog\Domain\Repository;
  */
 class PostRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+	public function findAll() {
+		$query = $this->createQuery();
+		$query->setOrderings(array(
+			'publicationDate' => 'DESC',
+		));
+		/*
+		$queryParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbQueryParser');
+		\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($queryParser->parseQuery($query));
+		\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($query->getQuerySettings());
+		*/
+		return $query->execute();
+	}
 
+	public function findByTag(\Pitchart\PiBlog\Domain\Model\Tag $tag) {
+		$query = $this->createQuery();
+		return $query
+			->matching($query->contains('tags', array($tag)))
+			->execute();
+	}
+
+	public function findByCategory(\Pitchart\PiBlog\Domain\Model\Category $category) {
+		$query = $this->createQuery();
+		return $query
+			->matching($query->contains('categories', array($category)))
+			->execute();
+	}
+
+	public function findLast() {
+		return $this->createQuery()->execute()->getFirst();
+	}
     
 }
