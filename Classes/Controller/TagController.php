@@ -33,6 +33,12 @@ class TagController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
+     * @var \Pitchart\PiBlog\Domain\Repository\TagRepository
+     * @inject
+     */
+    protected $tagRepository;
+
+    /**
      * action list
      *
      * @return void
@@ -51,7 +57,12 @@ class TagController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function showAction(\Pitchart\PiBlog\Domain\Model\Tag $tag)
     {
-        $this->view->assign('tag', $tag);
+        $postRepository = $this->objectManager->get('Pitchart\PiBlog\Domain\Repository\PostRepository');
+        $posts = $postRepository->findByTag($tag);
+        $this->view->assignMultiple(array(
+            'tag' => $tag,
+            'posts' => $posts,
+        ));
     }
 
 }
