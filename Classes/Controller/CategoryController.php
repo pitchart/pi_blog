@@ -33,6 +33,12 @@ class CategoryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 {
 
     /**
+     * @var \Pitchart\PiBlog\Domain\Repository\CategoryRepository
+     * @inject
+     */
+    protected $categoryRepository;
+
+    /**
      * action list
      *
      * @return void
@@ -51,7 +57,12 @@ class CategoryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function showAction(\Pitchart\PiBlog\Domain\Model\Category $category)
     {
-        $this->view->assign('category', $category);
+        $postRepository = $this->objectManager->get('Pitchart\PiBlog\Domain\Repository\PostRepository');
+        $posts = $postRepository->findByCategory($category);
+        $this->view->assignMultiple(array(
+            'category' => $category,
+            'posts' => $posts,
+        ));
     }
 
 }
